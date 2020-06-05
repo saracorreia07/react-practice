@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import classes from './Cockpit.css';
+import AuthContext from '../../context/auth-context';
 
 const cockpit = (props) => {
 
@@ -19,7 +20,7 @@ const cockpit = (props) => {
     }, []);
 
     useEffect(() => {
-        console.log('[Cockpit.js] 2nd useEffect'); 
+        console.log('[Cockpit.js] 2nd useEffect');
         return () => {
             console.log('[Cockpit.js] clean up work in 2nd useEffect');
         };
@@ -32,7 +33,6 @@ const cockpit = (props) => {
     if (props.showPersons) {
         btnClass = classes.Red;
     }
-
 
     if (props.personsLength <= 2) {
         assignedClasses.push(classes.red); // classes = ['red'];
@@ -49,7 +49,9 @@ const cockpit = (props) => {
             <button ref={toggleBtnRef} className={btnClass} onClick={props.clicked}>
                 Toggle Persons
             </button>
-            <button onClick={props.login}>Log in</button>
+            <AuthContext.Consumer>
+                {(context) => <button onClick={context.login}>Log in</button> }
+            </AuthContext.Consumer>
         </div>
     );
 };
